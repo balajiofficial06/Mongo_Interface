@@ -9,14 +9,13 @@ from datetime import datetime, timedelta
 
 
 
-from database.db import db
+from database.db import userModel
 from core.config import config
 
 
 
 
 userRouter = APIRouter()
-userModel = db.users
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth_schema = OAuth2PasswordBearer(tokenUrl="token")

@@ -5,4 +5,4 @@ client = MongoClient(config.MONGO_URL)
 
 db = client.query
 
-print(db.users.count_documents({}))
+userModel = db.users

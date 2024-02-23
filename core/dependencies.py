@@ -1,2 +1,1 @@
-async def verifyUserAuth():
-    pass
+
