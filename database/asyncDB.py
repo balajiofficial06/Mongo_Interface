@@ -3,8 +3,7 @@ from core.config import config
 from motor.motor_asyncio import AsyncIOMotorClient
 
 
-client = MongoClient(config.MONGO_URL)
-# client = AsyncIOMotorClient(config.MONGO_URL)
+client = AsyncIOMotorClient(config.MONGO_URL)
 
 
 db = client.query

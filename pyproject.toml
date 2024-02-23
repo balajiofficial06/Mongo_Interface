@@ -11,6 +11,8 @@ fastapi = "^0.109.2"
 passlib = "^1.7.4"
 pydantic = "^2.6.1"
 pydantic-settings = "^2.2.1"
+bcrypt = "^4.1.2"
+motor = "^3.3.2"
 
 [tool.poetry.group.dev.dependencies]
 fastapi = "^0.109.2"
