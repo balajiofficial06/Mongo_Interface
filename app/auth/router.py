@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from passlib.context import CryptContext
@@ -15,10 +15,14 @@ from core.config import config
 
 
 
-router = APIRouter()
+userRouter = APIRouter()
 userModel = db.users
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth_schema = OAuth2PasswordBearer(tokenUrl="token")
+
+revoked_tokens = set()
+
 
 
 class User(BaseModel):
@@ -66,7 +70,7 @@ def verify_password(plain_password, hashed_password):
 
 
 
-@router.post("/login", response_model=Token)
+@userRouter.post("/login", response_model=Token)
 
 async def login(login_data : User):
 
@@ -88,7 +92,7 @@ async def login(login_data : User):
 
 
 
-@router.post("/signIn", response_model=Token)
+@userRouter.post("/signIn", response_model=Token)
 
 async def signIn(request: SignInRequest):
 
@@ -104,5 +108,11 @@ async def signIn(request: SignInRequest):
     token = generateToken({"email": user["email"], "username": user["username"]})
 
     return {"access_token": token, "token_type": "bearer"}
+
+@userRouter.post("/logout")
+
+async def logout(token : str = oauth_schema):
+    revoked_tokens.add(token)
+    return {"message": "logout is successfull"}
 
     
