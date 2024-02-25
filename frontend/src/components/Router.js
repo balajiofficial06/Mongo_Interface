@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import SignIn from './SignIn';
-import Login from './Login';
-import Crud from './Crud';
+import SignIn from '../api/SignIn';
+import Login from '../api/Login';
+import Crud from '../api/Crud';
 import ProtectedRoute from './ProtectedRoute';
 
 const Router = () => {

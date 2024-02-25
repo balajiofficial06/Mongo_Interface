@@ -11,34 +11,34 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios"
-import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-
-
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
-export default function Login() {
+export default function SignIn() {
+
+    const navigate = useNavigate()
 
     const handleSubmit = async (event) => {
         try {
             event.preventDefault();
             const data = new FormData(event.currentTarget);
 
-            const response = await axios.post("http://127.0.0.1:8000/login", {
-                username: data.get('username'),
-                fullname: data.get('fullname'),
+            const response = await axios.post("http://127.0.0.1:8000/signIn", {
                 email: data.get('email'),
                 password: data.get('password')
             })
 
             if (response.status === 200) {
                 localStorage.setItem("token", response.data.access_token)
-                toast.success("logged in")
             }
+            toast.success("logged in")
+            navigate('/')
+
         } catch (err) {
             toast.error(err.response.data.detail)
         }
@@ -46,7 +46,7 @@ export default function Login() {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth={"sm"}>
+            <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
                     sx={{
@@ -60,35 +60,10 @@ export default function Login() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Login
+                        Sign in
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                        <Grid container display={"flex"} flexDirection={"row"} justifyContent={"space-between"} gap={1}>
-                            <Grid item>
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="username"
-                                    label="User name"
-                                    name="username"
-                                    autoComplete="username"
-                                    autoFocus
-                                />
-                            </Grid>
-                            <Grid item>
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="fullname"
-                                    label="Full Name"
-                                    name="fullname"
-                                    autoComplete="fullname"
-                                    autoFocus
-                                />
-                            </Grid>
-                        </Grid>
+
                         <TextField
                             margin="normal"
                             required
@@ -117,7 +92,7 @@ export default function Login() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Login
+                            Sign In
                         </Button>
                         <Grid container justifyContent={"center"}>
                             {/* <Grid item xs>
@@ -126,8 +101,8 @@ export default function Login() {
                                 </Link>
                             </Grid> */}
                             <Grid item>
-                                <Link to={"/signin"}>
-                                    {"Already have an account? SIGN IN"}
+                                <Link to={"/login"}>
+                                    {"Don't have an account? LOGIN"}
                                 </Link>
                             </Grid>
                         </Grid>
