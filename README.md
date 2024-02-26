@@ -72,6 +72,14 @@ Follow these steps to set up the FastAPI backend and React frontend:
 
    The frontend development server should now be running on `http://localhost:3000`.
 
+### DATABASE SETUP
+
+#### This step is optional in case of database change
+
+1. you can find the database and other configuration in /core/config.py. 
+
+2. you can run with the pre-existing mongoURL for simple setup
+
 ## Project Structure
 
 - **This Folder**: Contains the FastAPI backend code.
@@ -84,7 +92,7 @@ Contributions are welcome! Please feel free to open issues or submit pull reques
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Not Licensed
 
 ## Acknowledgments
 
