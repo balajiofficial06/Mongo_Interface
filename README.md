@@ -21,43 +21,32 @@ Follow these steps to set up the FastAPI backend and React frontend:
     git clone <repository-url>
     ```
 
-2. Navigate to the backend directory:
 
-    ```bash
-    cd backend
-    ```
-
-3. Create a virtual environment (optional but recommended):
+2. Create a virtual environment (optional but recommended):
 
     ```bash
     python3 -m venv venv
     ```
 
-4. Activate the virtual environment:
-
-    - On Windows:
-
-    ```bash
-    venv\Scripts\activate
-    ```
-
-    - On macOS/Linux:
-
-    ```bash
-    source venv/bin/activate
-    ```
 
 5. Install the required Python packages:
 
     ```bash
-    pip install -r requirements.txt
+    pip install -r requirement.txt
+    ```
+    or use
+   
+    ```bash
+    pip install fastapi uvicorn PyJWT pydantic pymongo motor pydantic_settings passlib
     ```
 
-6. Run the FastAPI server:
+7. Run the FastAPI server:
 
     ```bash
-    uvicorn main:app --reload
+    py main.py
     ```
+
+8. Run the 
 
    The backend server should now be running on `http://localhost:8000`.
 
@@ -78,14 +67,14 @@ Follow these steps to set up the FastAPI backend and React frontend:
 3. Start the development server:
 
     ```bash
-    npm start
+    npm run start
     ```
 
    The frontend development server should now be running on `http://localhost:3000`.
 
 ## Project Structure
 
-- **backend/**: Contains the FastAPI backend code.
+- **This Folder**: Contains the FastAPI backend code.
 - **frontend/**: Contains the React frontend code.
 - **README.md**: Instructions and information about the project.
 
