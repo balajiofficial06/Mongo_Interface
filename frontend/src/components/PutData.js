@@ -3,10 +3,62 @@ import toast from 'react-hot-toast';
 
 
 import { axiosMethods } from '../utils/useAxiosMethos';
+import { MenuItem, styled, Select, TextField, Button } from '@mui/material';
+
+const Wapper = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: "column",
+  justifyContent: 'center',
+  alignItems: "center",
+  padding: '2px',
+  height: "100vh",
+  gap: "50px"
+
+}))
+
+const Findbar = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: "center",
+  padding: '2px',
+  gap: "30px"
+
+}))
+
+const FilterColumnDiv = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: "center",
+  padding: '2px',
+  gap: '20px'
+
+}))
+
+const FilterDiv = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: "column",
+  justifyContent: 'space-between',
+  alignItems: "flex-end",
+  padding: '2px',
+  gap: '10px'
+
+}))
+
+const SubmitButtonDIv = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'end',
+  alignItems: "end",
+  padding: '2px',
+  gap: '20px'
+
+}))
 
 function PostData({ columns }) {
 
-  const options = columns.data
+
 
   const [filterValue, setFilterValue] = useState(0)
 
@@ -64,39 +116,37 @@ function PostData({ columns }) {
   };
 
   return (
-    <>
-      <div>
-        <select>
-          <option value='User ID'>User ID</option>
-        </select>
-        <input
-          type="text"
-          placeholder="Enter user ID"
-          value={filterValue}
-          onChange={(e) => setFilterValue(e.target.value)}
-        />
-      </div>
-
+    <Wapper>
+      <Findbar>
+        <Select value="User ID">
+          <MenuItem value='User ID'>User ID</MenuItem>
+        </Select>
+        <TextField label='Enter user ID' onChange={e => setFilterValue(e.target.value)} />
+      </Findbar>
       <form onSubmit={handleSubmit}>
-        {inputFields.map((inputField, index) => (
-          <div key={index}>
-            <input
-              type="text"
-              placeholder="Enter value"
-              value={inputField.value}
-              onChange={event => handleChangeInput(index, event)}
-            />
-            <select value={inputField.key} onChange={event => handleChangeKey(index, event)}>
-              {options && options.map((value, index) => (<option value={value} key={index}>{value}</option>))}
+        <FilterDiv>
+          {inputFields.map((inputField, index) => (
+            <FilterColumnDiv key={index}>
+              <TextField
+                label='Enter the Value'
+                onChange={event => handleChangeInput(index, event)}
+              />
+              <Select value={inputField.key} onChange={event => handleChangeKey(index, event)} style={{ width: '200px' }}>
+                {columns && Object.keys(columns).map((key, index) => (
+                  <MenuItem value={key} key={index}>{key}</MenuItem>
+                ))}
 
-            </select>
-            <button type="button" onClick={() => handleRemoveFields(index)}>Remove</button>
-          </div>
-        ))}
-        <button type="button" onClick={handleAddFields}>Add More</button>
-        <button type="submit">Submit</button>
+              </Select>
+              <Button variant='outlined' onClick={() => handleRemoveFields(index)}>Remove</Button>
+            </FilterColumnDiv>
+          ))}
+          <SubmitButtonDIv>
+            <Button variant='outlined' onClick={handleAddFields}>Add More</Button>
+            <Button variant='outlined' type="submit" >Submit</Button>
+          </SubmitButtonDIv>
+        </FilterDiv>
       </form>
-    </>
+    </Wapper>
   );
 
 

@@ -13,7 +13,7 @@ import { DataGrid } from '@mui/x-data-grid';
 function GetData({ columns }) {
 
     const [data, error] = useAuthenticatedDataFetch("http://127.0.0.1:8000/crud", 'get', {}, "/signin")
-    const row = columns.data
+    const row = columns
     console.log(row)
     // const headCol = [row.map((col) => ({ "feild": col, "headerName": col }))]
     // console.log(headCol, data)
@@ -36,7 +36,9 @@ function GetData({ columns }) {
             <Table sx={{ minWidth: 500 }} size="small" aria-label="a dense table">
                 <TableHead>
                     <TableRow>
-                        {row && row.map((rowName, index) => (<TableCell align="right" key={index}>{rowName}</TableCell>))}
+                        {row && Object.keys(row).map((rowName, index) => (
+                            <TableCell align="right" key={index}>{rowName}</TableCell>
+                        ))}
 
                     </TableRow>
                 </TableHead>

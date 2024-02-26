@@ -1,15 +1,26 @@
-import { Button, FormControl, Grid, Paper, TextField, styled } from '@mui/material'
-import React from 'react'
+import { Box, Button, FormControl, Grid, Paper, TextField, styled } from '@mui/material'
+import React, { useState } from 'react'
+import { axiosMethods } from '../utils/useAxiosMethos';
+import toast from 'react-hot-toast';
+
 
 function PutData({ columns }) {
 
 
-
     const Wapper = styled('div')(() => ({
         display: "flex",
-        direction: "row",
+        flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+
+    }))
+
+    const WapperGrid = styled('div')(() => ({
+        display: "flex",
+        flexDirection: "column",
+        alignItems: 'center',
+        justifyContent: "space-between",
+        gap: "30px"
 
     }))
 
@@ -19,44 +30,51 @@ function PutData({ columns }) {
         textAlign: 'center',
     }));
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(e)
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        console.log(data.get("email"))
 
-    }
+        const submitData = {}
+        Object.entries(columns).forEach(([key, value]) => {
+            submitData[key] = data.get(key);
+        });
+        const respons = await axiosMethods("http://127.0.0.1:8000/crud", "post", { "data": submitData })
+        if (respons.request.status == 200) {
+            toast.success(respons.data.message)
 
-    // const [userId, setUserId] = useState('');
-    // const [subscriptionType, setSubscriptionType] = useState('');
-    // const [monthlyRevenue, setMonthlyRevenue] = useState('');
-    // const [joinDate, setJoinDate] = useState('');
-    // const [lastPaymentDate, setLastPaymentDate] = useState('');
-    // const [country, setCountry] = useState('');
-    // const [age, setAge] = useState('');
-    // const [gender, setGender] = useState('');
-    // const [device, setDevice] = useState('');
-    // const [planDuration, setPlanDuration] = useState('');
+        } else {
+            toast.error("Unable to insert the document")
+        }
+    };
 
 
-    const fields = columns.data
+
     return (
-        <>
-            <Wapper>
 
-                <FormControl onSubmit={handleSubmit}>
-                    <Grid container rowSpacing={5} columnSpacing={2} rowGap={4}>
-                        {fields.map((value, index) => (
-                            <Grid lg={3}>
-                                <Item>
-                                    <TextField key={index} label={value} />
-                                </Item>
-                            </Grid>
+        <Wapper>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <WapperGrid>
+                    <Grid container rowSpacing={5} columnSpacing={2} rowGap={4} style={{ justifyContent: "center" }} >
+                        {columns && Object.keys(columns).map((colname, index) => (<Grid key={index} item xl={3}>
+                            <TextField
+                                key={index}
+                                margin="normal"
+                                fullWidth
+                                id={colname}
+                                label={colname}
+                                name={colname}
+                                autoComplete={colname}
+                                autoFocus
+                            />
+                        </Grid>
                         ))}
 
                     </Grid>
-                    <Button variant='outlined' type='submit' >Create</Button>
-                </FormControl>
-            </Wapper>
-        </>
+                    <Button variant='outlined' type='submit'>Create</Button>
+                </WapperGrid>
+            </Box>
+        </Wapper>
     )
 }
 

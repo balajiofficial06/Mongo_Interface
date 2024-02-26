@@ -26,7 +26,7 @@ const Seperater = styled('div')(() => ({
 
 
 const Crud = () => {
-    const [method, setMethod] = useState('None')
+    const [method, setMethod] = useState('get')
 
 
     const [data, error] = useAuthenticatedDataFetch("http://127.0.0.1:8000/cols", 'get', {}, "/sigin")
