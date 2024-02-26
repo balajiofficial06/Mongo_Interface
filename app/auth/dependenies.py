@@ -27,7 +27,7 @@ async def get_current_user(token: str = Depends(oauth_schema)):
         useremail: str = payload.get("email")
         if useremail is None:
             raise credentials_exception
-    except jwt.JWTError:
+    except :
         raise credentials_exception
 
     user = userModel.find_one({"email": useremail})
