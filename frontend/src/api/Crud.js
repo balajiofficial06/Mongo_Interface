@@ -3,8 +3,8 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import GetData from '../components/GetData';
-import PostData from '../components/PostData';
 import PutData from '../components/PutData';
+import PostData from '../components/PostData';
 import DeleteData from '../components/Delete';
 import useAuthenticatedDataFetch from '../utils/useAuthenticatedDataFetch';
 
@@ -29,7 +29,7 @@ const Crud = () => {
     const [method, setMethod] = useState('None')
 
 
-    const [data, error] = useAuthenticatedDataFetch("http://127.0.0.1:8000/cols", "/sigin")
+    const [data, error] = useAuthenticatedDataFetch("http://127.0.0.1:8000/cols", 'get', {}, "/sigin")
 
     const handelChange = (e) => {
         setMethod(e.target.value)
@@ -47,8 +47,8 @@ const Crud = () => {
                     onChange={handelChange}
                 >
                     <MenuItem value='get'>Get data</MenuItem>
-                    <MenuItem value='post'>Update data</MenuItem>
-                    <MenuItem value='update'>Create record</MenuItem>
+                    <MenuItem value='post'>Create record</MenuItem>
+                    <MenuItem value='update'>Update data</MenuItem>
                     <MenuItem value='delete'>Delete record</MenuItem>
                 </Select>
             </FormControl>

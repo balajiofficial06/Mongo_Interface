@@ -2,18 +2,23 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function useAuthenticatedDataFetch(url, navigateUrl) {
+function useAuthenticatedDataFetch(url, method, sendData, navigateUrl) {
 
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const navigate = useNavigate()
+    let reqData = JSON.stringify(sendData);
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const response = await axios.get(url, {
-                    headers: { Authorization: `Bearer ${token}` }
+                const response = await axios.request({
+                    method: method,
+                    url: url,
+                    headers: { Authorization: `Bearer ${token}` },
+                    data: reqData
                 });
                 if (response.data) {
                     setData(response.data);
